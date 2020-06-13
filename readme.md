@@ -3,12 +3,13 @@
 ## Name: Zhizhi Wang
 
 ## SID: 862188792
+
 ## Overall Description
 The whole project need to find out which states in the US have the most stable rainfall. We need to combine the given two dataset to calculate the final result. I divide my project into four parts
 
 First, it is to generate the location information through the given .csv file because we need to use it shatter which is the data of US.
 
-Next, it is to get the useful information from the .txt file and store it into one .csv file because .txt file contains too much useless infomation.
+Next, it is to get the useful information from the .txt file and store it into one .csv file because .txt file contains too much useless infomation and it has many headers which should be ignored.
 
 Then, it is to generate the recording file which contains the information of each month's rainfall of each state in the US because we need to combine it with the file which contains location information.
 
@@ -30,11 +31,13 @@ Step4 is to join the results of step 1 and step 3 together. We need to set the j
 
 ## Total Runtime
 
-The total runtime is 112.94s
+The total runtime is 120.876s
 
 ![avatar](time.PNG)
 
 ## Run this program
-
-put the WeatherStationLocations.csv, 2006.txt, 2007.txt, 2008.txt, 2009.txt files under the same direction with the getRainFall.py and then run the command "bash run.sh"
+$1 is the path of the folder of the location file
+$2 is the path of the folder of the recording files
+$3 is the path of the folder for the output file
+run the command "bash run.sh" $1 $2 $3
 

@@ -3,12 +3,25 @@ from pyspark.sql import SQLContext
 from pyspark.sql.functions import col
 import csv
 import time
+import sys
+import os 
 
 sc = SparkContext()
 sqlContext = SQLContext(sc)
+
+#get Files under the given path
+def getFiles(path):
+    files= os.listdir(path)
+    files_list = []
+    for file in files:
+        if not os.path.isdir(file):
+            files_list.append(os.path.join(path,file))
+    return files_list
+
+
 #get the three columns(USAF, CTRY and STATE)
-def getLocations():
-    df = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load('WeatherStationLocations.csv')
+def getLocations(file_name):
+    df = sqlContext.read.format('com.databricks.spark.csv').options(header='true', inferschema='true').load(file_name)
     df = df.select('USAF', 'CTRY', 'STATE')
     df = df.filter("CTRY = 'US' and STATE is not null")
     df = df.select('USAF', 'STATE').dropDuplicates(['USAF'])
@@ -65,8 +78,7 @@ def preDeal(file = "test.txt", mode = 0):
     csv_writer.writerows(content)
     csv_file.close()
 
-def batchDeal():
-    file_list = ["2006.txt", "2007.txt", "2008.txt", "2009.txt"]
+def batchDeal(file_list):
     mode = [0,1,1,1]
     for i in range(len(mode)):
         preDeal(file_list[i], mode[i])
@@ -86,8 +98,8 @@ def getRainFallData(file = "middle_result.csv"):
     df = df.withColumnRenamed("sum(avg(PRCP))", "PRCP")
     df.toPandas().to_csv("recordings.csv", index = False, header=True)
 
-def SortedByDifference(file = "recordings.csv"):
-    df =  sqlContext.read.format('com.databricks.spark.csv').options(header="true", inferschema='true').load(file)
+def SortedByDifference(file):
+    df =  sqlContext.read.format('com.databricks.spark.csv').options(header="true", inferschema='true').load( "recordings.csv")
     df1 = df2 = df
     df1 = df1.groupby("STATE").agg({"PRCP":"max"})
     df1 = df1.withColumnRenamed("max(PRCP)", "PRCP")
@@ -100,14 +112,22 @@ def SortedByDifference(file = "recordings.csv"):
     df = df1.join(df2, on = ['STATE'], how = "inner").dropDuplicates(['STATE'])
     df = df.withColumn("Diff", df.max_PRCP - df.min_PRCP)
     df = df.sort("Diff", ascending = True)
-    df.toPandas().to_csv("sorted_file.csv", index = False, header=True)
+    df.toPandas().to_csv(file, index = False, header=True)
 
 if __name__ == "__main__":
     start = time.time()
-    getLocations()
-    batchDeal()
+    location_folder = sys.argv[1]
+    recording_folder = sys.argv[2]
+    output_folder = sys.argv[3]
+    location_file = getFiles(location_folder)[0]
+    recording_files = getFiles(recording_folder)
+    output_file_path = os.path.join(output_folder, "sorted_file.csv")
+
+    getLocations(location_file)
+    batchDeal(recording_files)
     getRainFallData()
-    SortedByDifference()
+    SortedByDifference(output_file_path)
+
     end = time.time()
     print("it takes {}s in total".format(end - start))
 
