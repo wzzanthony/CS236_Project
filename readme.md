@@ -31,7 +31,7 @@ Step4 is to join the results of step 1 and step 3 together. We need to set the j
 
 ## Total Runtime
 
-The total runtime is 134.658s
+The total runtime is 96.49s
 
 ![avatar](time.PNG)
 

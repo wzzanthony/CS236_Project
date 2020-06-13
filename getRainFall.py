@@ -96,8 +96,8 @@ def getRainFallData(file = "middle_result.csv"):
     df2 = sqlContext.read.format('com.databricks.spark.csv').options(header="true", inferschema='true').load("locations.csv")
     df  = df2.join(df1, on = ['USAF'], how = "inner")
     df = df.select("STATE", "YEARMODA","avg(PRCP)")
-    df = df.groupby("STATE", "YEARMODA").agg({"avg(PRCP)":"sum"}).sort("STATE", "YEARMODA", ascending = True)
-    df = df.withColumnRenamed("sum(avg(PRCP))", "PRCP")
+    df = df.groupby("STATE", "YEARMODA").agg({"avg(PRCP)":"avg"}).sort("STATE", "YEARMODA", ascending = True)
+    df = df.withColumnRenamed("avg(avg(PRCP))", "PRCP")
     df.toPandas().to_csv("recordings.csv", index = False, header=True)
 
 def SortedByDifference(file):
