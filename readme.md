@@ -1,9 +1,9 @@
 # CS236 Project: Find out Which States in The US Have The Most Stable Rainfall
 
-##Name: Zhizhi Wang
+## Name: Zhizhi Wang
 
-##SID: 862188792
-##Overall Description
+## SID: 862188792
+## Overall Description
 The whole project need to find out which states in the US have the most stable rainfall. We need to combine the given two dataset to calculate the final result. I divide my project into four parts
 
 First, it is to generate the location information through the given .csv file because we need to use it shatter which is the data of US.
@@ -14,7 +14,7 @@ Then, it is to generate the recording file which contains the information of eac
 
 Last, it is to genrate the Final result.
 
-##Description of Each Step Job
+## Description of Each Step Job
 
 Step1 will select the states in the US. we need to use Spark to select USAF, CTRY, STATE columns. the filter condition should be set as CTRY = "US" and STATE is not null. USAF is for later use to combine this dataset with the other one.After we get the data we want, we can only store USAF and STATE these two columns in the locations.csv file.
 
@@ -28,13 +28,13 @@ Step3 is to calculate each month's precipitation through sql command which is su
 
 Step4 is to join the results of step 1 and step 3 together. We need to set the join condition as USAF == STN---. Then, it is to find the maximum and minimum precipitation of each state and their corresponding month and calculate their differences, which is the standard for ordering.
 
-##Total Runtime
+## Total Runtime
 
 The total runtime is 112.94s
 
 ![avatar](time.PNG)
 
-##Run this program
+## Run this program
 
 put the WeatherStationLocations.csv, 2006.txt, 2007.txt, 2008.txt, 2009.txt files under the same direction with the getRainFall.py and then run the command "bash run.sh"
 
