@@ -37,7 +37,10 @@ The total runtime is 120.876s
 
 ## Run this program
 $1 is the path of the folder of the location file
+
 $2 is the path of the folder of the recording files
+
 $3 is the path of the folder for the output file
-run the command "bash run.sh" $1 $2 $3
+
+run the command "bash run.sh $1 $2 $3"
 
