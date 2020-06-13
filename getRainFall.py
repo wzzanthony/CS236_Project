@@ -49,7 +49,7 @@ def generateDict():
 """
 
 def preDeal(file = "test.txt", mode = 0):
-    dic = {'A': 4, 'B':2, 'C':1.5, 'D':1, 'E':1, 'F':1, 'G':1, 'H':0, 'I':0}
+    dic = {'A': 4, 'B':2, 'C':4/3, 'D':1, 'E':1, 'F':1, 'G':1, 'H':0, 'I':0}
     columns = ["USAF", "YEARMODA", "PRCP"]
     content = []
     if mode == 0:
