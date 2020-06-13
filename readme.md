@@ -21,7 +21,7 @@ Step1 will select the states in the US. we need to use Spark to select USAF, CTR
 
 Step2 is like one feature selectiing process. As the Dataset information shows, lots of information can be ignoreds so I just select the columns I need, They are STN---(which is matched with USAF), YEARMODA(which represents the time, but we only need the month information), PRCP(which is the precipitation)
 
-For the PRCP, to calculate its value, I use one hashmap to map its last number to the multiplier. For example, if it is 'A', the multiplier should be 4. If it is 'C', it should be 1.5.
+For the PRCP, to calculate its value, I use one hashmap to map its last number to the multiplier. For example, if it is 'A', the multiplier should be 4. If it is 'C', it should be 1.5. If it is end with ‘9’, ignore it.
 
 Because we don't care about the years, so I store all useful infromation of these four .txt file into one middle_result.csv file
 
@@ -31,7 +31,7 @@ Step4 is to join the results of step 1 and step 3 together. We need to set the j
 
 ## Total Runtime
 
-The total runtime is 120.876s
+The total runtime is 134.658s
 
 ![avatar](time.PNG)
 

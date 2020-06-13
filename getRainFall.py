@@ -49,7 +49,7 @@ def generateDict():
 """
 
 def preDeal(file = "test.txt", mode = 0):
-    dic = {'A': 4, 'B':2, 'C':1.5, 'D':1, 'E':1, 'F':1, 'G':1, 'H':0, 'I':0, '9':0}
+    dic = {'A': 4, 'B':2, 'C':1.5, 'D':1, 'E':1, 'F':1, 'G':1, 'H':0, 'I':0}
     columns = ["USAF", "YEARMODA", "PRCP"]
     content = []
     if mode == 0:
@@ -67,6 +67,8 @@ def preDeal(file = "test.txt", mode = 0):
                 time =value[2][4:6]
                 ret.append(time)
                 prcp = value[-3]
+                if prcp[-1] == '9':
+                    continue
                 prcp_sign = dic[prcp[-1]]
                 prcp_value = float(prcp[:-1]) * prcp_sign
                 ret.append(prcp_value)
